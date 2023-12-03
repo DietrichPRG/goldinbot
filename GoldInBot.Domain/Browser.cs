@@ -15,7 +15,6 @@ namespace GoldInBot.Domain
         public Browser()
         {
             this.driver = new ChromeDriver();
-            this.driver.Manage().Window.Maximize();
         }
 
         public async Task Navigate(Uri url)

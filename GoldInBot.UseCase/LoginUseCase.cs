@@ -5,23 +5,23 @@ namespace GoldInBot.UseCase
 {
     public class LoginUseCase
     {
-        private readonly string loginUrl = "https://linkedin.com/login";
+        private const string LoginUrl = "https://linkedin.com/login";
 
-        private readonly Browser _browser;
-        private readonly LoginPage loginPage;
+        private readonly LoginPage _loginPage;
 
         public LoginUseCase(Browser browser)
         {
-            this._browser = browser;
-            this.loginPage = new LoginPage(this._browser);
-            this._browser.driver.Navigate().GoToUrl(new Uri(this.loginUrl));
+            this._loginPage = new LoginPage(browser);
+            browser.driver.Navigate().GoToUrl(new Uri(LoginUrl));
         }
 
         public Task Login(string userName, string passWord)
         {
-            this.loginPage.WriteLoginInput(userName);
-            this.loginPage.WritePasswordInput(passWord);
-            this.loginPage.PressLoginButton();
+            this._loginPage.LoginInput?.SendKeys(userName);
+            this._loginPage.PasswordInput?.SendKeys(passWord);
+            this._loginPage.LoginButton?.Click();
+
+            return Task.CompletedTask;
         }
     }
 }
